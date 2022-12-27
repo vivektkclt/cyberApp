@@ -1,51 +1,82 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect} from 'react';
+import {View, Text, TouchableOpacity, Linking, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {styles} from './style';
-import Icon from 'react-native-vector-icons/Ionicons';
-import GetLocation from 'react-native-get-location';
-import {hasLocationPermission} from '../../helpers';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import appColors from '../../Theme/Colors';
+import {updateFir} from '../../api/methods/FirUpadte';
+import {loginHelper} from '../../api/helper/loginHelper';
 import {useDispatch, useSelector} from 'react-redux';
 import {setLoader} from '../../Redux/Reducers/globalReducer';
-const FIRitem = ({data}) => {
-  const {loader} = useSelector(state => state.global);
+import Toast from 'react-native-simple-toast';
+const FIRitem = ({data, coordinates, updateLocation}) => {
   const dispatch = useDispatch();
+  const {user} = useSelector(state => state.authReducer);
+  const openGps = () => {
+    Linking.openURL(
+      'https://www.google.com/maps?q=' +
+        coordinates?.latitude +
+        ',' +
+        coordinates.longitude,
+    );
+  };
 
-  useEffect(() => {
-    console.log(loader, 'LOADER======');
-  }, [loader]);
-  const getLocation = async () => {
+  const onConfirm = async () => {
     dispatch(setLoader(true));
-    const permission = await hasLocationPermission();
-    if (permission) {
-      GetLocation.getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 15000,
-      })
-        .then(location => {
-          setTimeout(() => {
-            dispatch(setLoader(false));
-          }, 1000);
-          console.log(location, 'LOCATION======');
-        })
-        .catch(error => {
-          const {code, message} = error;
-          console.warn(code, message);
-        });
+    let param = {
+      Internalid: data?.Internalid,
+      latitude: coordinates?.latitude,
+      longitude: coordinates?.longitude,
+    };
+    try {
+      console.log(param);
+      let res = await updateFir(param);
+      if (res[0] === 'Success..') {
+        Toast.show('Update success..', Toast.SHORT, Toast.TOP);
+        loginHelper(user);
+      } else {
+        dispatch(setLoader(false));
+        if (res?.Message) {
+          Toast.show(res?.Message, Toast.SHORT, Toast.TOP);
+        } else {
+          Toast.show('Something went wrong', Toast.SHORT, Toast.TOP);
+        }
+      }
+    } catch (error) {
+      if (error?.Message) {
+        Toast.show(error?.Message, Toast.SHORT, Toast.TOP);
+      } else {
+        Toast.show('Something went wrong', Toast.SHORT, Toast.TOP);
+      }
     }
   };
   return (
     <View style={styles.container}>
       <View style={styles.txtContainer}>
         <Text style={styles.firNo}>FIR No : {data?.firno}</Text>
+        <TouchableOpacity
+          onPress={() => updateLocation()}
+          style={styles.gpsButton}>
+          <Icon name="gps-fixed" size={25} color={appColors.background} />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          getLocation();
-        }}
-        style={styles.btnContainer}>
-        <Text style={styles.btnTxt}>Update Location</Text>
-        <Icon color={'black'} name="md-location-sharp" size={20} />
-      </TouchableOpacity>
+      <Text style={styles.latLngTxt}>
+        Latitude :{coordinates?.latitude},{'   '} Longitude :{' '}
+        {coordinates?.longitude}
+      </Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+        <TouchableOpacity
+          onPress={() => onConfirm()}
+          style={styles.btnContainer}>
+          <Text style={styles.btnTxt}>Confirm</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            openGps();
+          }}
+          style={styles.btnContainer}>
+          <Text style={styles.btnTxt}>Map</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

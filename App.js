@@ -1,20 +1,23 @@
-import {View, Text} from 'react-native';
 import React from 'react';
-import SplashScreen from './src/screens/SplashScreen';
 import {NavigationContainer} from '@react-navigation/native';
-import AppWrapper from './src/components/AppWrapper';
-import Login from './src/screens/Login';
 import Navigator from './src/Navigation/Navigator';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import store from './src/Redux/store';
 import {Provider} from 'react-redux';
+import {persistStore} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react';
+import Loader from './src/components/Loader';
 const App = () => {
+  let persistor = persistStore(store);
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <Provider store={store}>
-        <NavigationContainer>
-          <Navigator />
-        </NavigationContainer>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer>
+            <Loader />
+            <Navigator />
+          </NavigationContainer>
+        </PersistGate>
       </Provider>
     </GestureHandlerRootView>
   );

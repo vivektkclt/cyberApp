@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 13,
     marginLeft: '12%',
-    top: 15,
+    top: 18,
   },
   fieldConatiner: {
     height: '69%',
@@ -22,6 +22,9 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(56,48,76, 0.8)',
     justifyContent: 'center',
     borderRadius: 20,
+    // backgroundColor: 'orange',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   inputConatiner: {
     flexDirection: 'row',
@@ -30,6 +33,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     // backgroundColor: 'gray',
     padding: 15,
+  },
+  eyeContainer: {
+    // backgroundColor: 'green',
+    height: '100%',
+    width: '15%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inputBox: {
     flex: 1,

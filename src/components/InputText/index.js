@@ -4,20 +4,12 @@ import {styles} from './styles';
 import appColors from '../../Theme/Colors';
 import Icon from 'react-native-vector-icons/Feather';
 const InputText = props => {
-  const {label = 'Sample Label', placeholder = 'Enter value'} = props;
-  const [fieldValue, setValue] = useState('');
+  const {label = 'Sample Label', value} = props;
   const [isFocus, setFocus] = useState(false);
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          height: '69%',
-          width: '100%',
-          backgroundColor: 'rgba(56,48,76, 0.8)',
-          justifyContent: 'center',
-          borderRadius: 20,
-        }}>
-        {isFocus || fieldValue ? (
+      <View style={styles.mainView}>
+        {isFocus || value ? (
           <Text style={styles.labelText}>{label}</Text>
         ) : null}
         <View style={styles.inputConatiner}>
@@ -25,18 +17,16 @@ const InputText = props => {
             name="user"
             size={25}
             color={
-              isFocus || fieldValue
-                ? appColors.white
-                : appColors.placeHolderWhite
+              isFocus || value ? appColors.white : appColors.placeHolderWhite
             }
           />
           <TextInput
-            onChangeText={value => {
-              setValue(value);
+            onChangeText={text => {
+              props.onChangeText(text);
             }}
             onBlur={() => setFocus(false)}
             onFocus={() => setFocus(true)}
-            value={fieldValue}
+            value={value}
             placeholderTextColor={appColors.placeHolderWhite}
             placeholder={label}
             style={styles.inputBox}

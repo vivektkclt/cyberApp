@@ -53,4 +53,5 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
   },
+  errorText: {top: -25, alignSelf: 'center', color: 'red'},
 });

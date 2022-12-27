@@ -8,6 +8,13 @@ export const styles = StyleSheet.create({
     paddingBottom: 10,
     // backgroundColor: 'green',
   },
+  mainView: {
+    height: '69%',
+    width: '100%',
+    backgroundColor: 'rgba(56,48,76, 0.8)',
+    justifyContent: 'center',
+    borderRadius: 20,
+  },
   labelText: {
     color: appColors.white,
     textDecorationColor: appColors.white,

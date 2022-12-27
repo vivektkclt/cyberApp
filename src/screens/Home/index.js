@@ -1,14 +1,23 @@
 import {View, Text, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppWrapper from '../../components/AppWrapper';
 import {FIRitem, HomeHeader} from '../../components';
 import {styles} from './styles';
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+import {useDispatch, useSelector} from 'react-redux';
+import GetLocation from 'react-native-get-location';
+import Geolocation from 'react-native-geolocation-service';
+import {getCurrentLocation, hasLocationPermission} from '../../helpers';
+import {setLoader} from '../../Redux/Reducers/globalReducer';
 const Home = () => {
+  const dispatch = useDispatch();
+  const {firList} = useSelector(state => state.globalReducer);
+  const {user} = useSelector(state => state.authReducer);
+  const [cordinates, setCordinates] = useState({latitude: '', longitude: ''});
+  useEffect(() => {
+    getLocation();
+    console.log('FIRLIST=====', user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firList]);
   const data = [
     {
       Internalid: 157276,
@@ -86,69 +95,40 @@ const Home = () => {
       token: 'b5f4a8f31d754754bd715aab068d5413',
     },
   ];
-  const DATA1 = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ];
-  const firItem = ({item}) => {
-    return <FIRitem data={item} />;
+  const getLocation = async () => {
+    dispatch(setLoader(true));
+    const permission = await hasLocationPermission();
+    if (permission) {
+      let location = await getCurrentLocation();
+      console.log(location, 'LOCATION=====');
+      if (location) {
+        setTimeout(() => {
+          dispatch(setLoader(false));
+        }, 1000);
+        setCordinates({
+          latitude: location?.latitude,
+          longitude: location?.longitude,
+        });
+      }
+    }
   };
-  const renderItem = ({item}) => <Item title={item.title} />;
-
+  const firItem = ({item}) => {
+    return (
+      <FIRitem
+        updateLocation={() => getLocation()}
+        coordinates={cordinates}
+        data={item}
+      />
+    );
+  };
   return (
     <AppWrapper>
       <HomeHeader />
       <FlatList
         contentContainerStyle={styles.container}
-        data={data}
+        data={firList}
         renderItem={firItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item?.Internalid}
       />
     </AppWrapper>
   );

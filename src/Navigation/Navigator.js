@@ -5,6 +5,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 import {Login, Splash, Home, Profile} from '../screens';
 import AppWrapper from '../components/AppWrapper';
+import CustomDrawer from './CustomDrawer/CustomDrawer';
 const customAnimation = {
   gestureDirection: 'horizontal',
   cardStyleInterpolator: ({current, layouts}) => {
@@ -44,9 +45,13 @@ function HomeStack() {
       screenOptions={{
         headerShown: false,
         ...customAnimation,
+      }}
+      drawerContent={props => {
+        return <CustomDrawer {...props} />;
       }}>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Login" component={Login} />
     </Drawer.Navigator>
   );
 }

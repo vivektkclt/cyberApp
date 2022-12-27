@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     width: '90%',
     alignSelf: 'center',
-    minHeight: 120,
+    minHeight: 150,
     backgroundColor: appColors.transPrentWhite,
     marginTop: 20,
     borderRadius: 20,
@@ -15,15 +15,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
-    height: 40,
+    height: 70,
+    justifyContent: 'space-between',
   },
   firNo: {
     fontSize: 20,
     fontWeight: '500',
+    color: appColors.white,
   },
+  latLngTxt: {width: '90%', alignSelf: 'center'},
   btnContainer: {
-    width: '50%',
-    height: 50,
+    width: '30%',
+    height: 35,
     backgroundColor: 'white',
     alignSelf: 'center',
     marginTop: 10,
@@ -34,7 +37,12 @@ export const styles = StyleSheet.create({
   },
   btnTxt: {
     color: appColors.background,
-    marginLeft: 10,
     fontWeight: '500',
+  },
+  gpsButton: {
+    backgroundColor: 'white',
+    padding: 5,
+    marginTop: 5,
+    borderRadius: 10,
   },
 });
