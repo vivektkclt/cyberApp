@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity, Linking, Alert} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, Linking} from 'react-native';
+import React from 'react';
 import {styles} from './style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import appColors from '../../Theme/Colors';
@@ -63,7 +63,7 @@ const FIRitem = ({data, coordinates, updateLocation}) => {
         Latitude :{coordinates?.latitude},{'   '} Longitude :{' '}
         {coordinates?.longitude}
       </Text>
-      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+      <View style={styles.btnWrapper}>
         <TouchableOpacity
           onPress={() => onConfirm()}
           style={styles.btnContainer}>

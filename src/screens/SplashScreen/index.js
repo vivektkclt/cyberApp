@@ -1,4 +1,4 @@
-import {View, Text, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import images from '../../assets/Images';
 import {styles} from './styles';
@@ -8,7 +8,6 @@ import {getCurrentLocation, hasLocationPermission} from '../../helpers';
 import {loginHelper} from '../../api/helper/loginHelper';
 const SplashScreen = ({navigation}) => {
   const [biometricSucess, setBiometricSucess] = useState(false);
-  const [biometricType, setBiometricType] = useState('TouchID');
   const {isLoggedIn, user} = useSelector(state => state.authReducer);
   useEffect(() => {
     setTimeout(() => {
@@ -20,6 +19,7 @@ const SplashScreen = ({navigation}) => {
     const permission = await hasLocationPermission();
     if (permission) {
       let location = await getCurrentLocation();
+      console.log(location);
     }
   };
 
@@ -44,11 +44,10 @@ const SplashScreen = ({navigation}) => {
     if (biometricSucess) {
       getLocation();
       console.log(isLoggedIn, 'TEST', user);
-      // setTimeout(() => {
       if (isLoggedIn) {
         loginHelper(user).then(response => {
           if (response?.status) {
-            navigation.navigate('HomeStack');
+            navigation.replace('HomeStack');
           } else {
             navigation.replace('Login');
           }
@@ -56,7 +55,6 @@ const SplashScreen = ({navigation}) => {
       } else {
         navigation.replace('Login');
       }
-      // }, 2000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biometricSucess]);

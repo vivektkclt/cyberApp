@@ -1,4 +1,4 @@
-import {View, Text, Modal} from 'react-native';
+import {View, Modal} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import LottieView from 'lottie-react-native';

@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     color: appColors.white,
   },
   latLngTxt: {width: '90%', alignSelf: 'center'},
+  btnWrapper: {flexDirection: 'row', justifyContent: 'space-around'},
   btnContainer: {
     width: '30%',
     height: 35,

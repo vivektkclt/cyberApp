@@ -18,7 +18,7 @@ const Login = ({navigation}) => {
     if (validate()) {
       loginHelper({userName: userName, password: password}).then(response => {
         if (response?.status) {
-          navigation.navigate('HomeStack');
+          navigation.replace('HomeStack');
         } else {
           setError(response?.message);
         }

@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import {store} from '../rematch/store';
 import store from '../Redux/store';
 import * as authReducer from '../Redux/Reducers/authReducer';
 import * as globalReducer from '../Redux/Reducers/globalReducer';

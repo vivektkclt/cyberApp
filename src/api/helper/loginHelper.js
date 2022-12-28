@@ -17,8 +17,8 @@ export const loginHelper = async data => {
       setTimeout(() => {
         store.dispatch(globalReducer.setLoader(false));
       }, 2000);
-      if (data?.login) {
-      }
+      // if (data?.login) {
+      // }
       return {status: true, message: 'successs'};
     }
   } else {
