@@ -6,9 +6,12 @@ import animations from '../../assets/animations';
 import {InputText, PasswordInput} from '../../components';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AppWrapper from '../../components/AppWrapper';
-import {loginHelper} from '../../api/helper/loginHelper';
-
+import {login} from '../../api/methods/Login';
+import {useDispatch} from 'react-redux';
+import {setLogin} from '../../Redux/Reducers/authReducer';
+import {setLoader} from '../../Redux/Reducers/globalReducer';
 const Login = ({navigation}) => {
+  const dispactch = useDispatch();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [errorTxt, setError] = useState('');
@@ -16,13 +19,26 @@ const Login = ({navigation}) => {
   const loginAction = async () => {
     Keyboard.dismiss();
     if (validate()) {
-      loginHelper({userName: userName, password: password}).then(response => {
-        if (response?.status) {
-          navigation.replace('HomeStack');
-        } else {
-          setError(response?.message);
-        }
-      });
+      dispactch(setLoader(true));
+      let response = await login({userName: userName, password: password});
+      console.log(response, 'RESPONSE++');
+      if (response?.AccessToken) {
+        dispactch(setLoader(false));
+        dispactch(
+          setLogin({
+            userName: userName,
+            password: password,
+            accessToken: response?.AccessToken,
+          }),
+        );
+        navigation.replace('HomeStack');
+      } else if (response?.error) {
+        dispactch(setLoader(false));
+        setError(response?.error);
+      } else {
+        dispactch(setLoader(false));
+        setError('something went wrong..');
+      }
     }
   };
   /*
@@ -53,6 +69,14 @@ const Login = ({navigation}) => {
             autoPlay={true}
             loop={true}
           />
+          {/* <Text
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              color: 'white',
+            }}>
+            RAPID
+          </Text> */}
         </View>
         <View style={styles.formContainer}>
           <Text style={styles.titleText}>Login</Text>

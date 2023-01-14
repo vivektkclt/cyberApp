@@ -1,6 +1,6 @@
 const animations = {
   loginIcon: require('./loginIcon.json'),
-  locationLoading: require('./locationLoading.json'),
   loader: require('./loader.json'),
+  emptyDocs: require('./emptyDocs.json'),
 };
 export default animations;

@@ -8,7 +8,7 @@ import {getCurrentLocation, hasLocationPermission} from '../../helpers';
 import {loginHelper} from '../../api/helper/loginHelper';
 const SplashScreen = ({navigation}) => {
   const [biometricSucess, setBiometricSucess] = useState(false);
-  const {isLoggedIn, user} = useSelector(state => state.authReducer);
+  const {isLoggedIn, user, dateLogin} = useSelector(state => state.authReducer);
   useEffect(() => {
     setTimeout(() => {
       handleBiometric();
@@ -42,22 +42,32 @@ const SplashScreen = ({navigation}) => {
    */
   useEffect(() => {
     if (biometricSucess) {
+      let loggedDate =
+        dateLogin && dateLogin !== ''
+          ? getDaysBetweenDates(new Date(), new Date(dateLogin))
+          : 0;
+      console.log(dateLogin, 'DATE+=====111', loggedDate);
       getLocation();
-      console.log(isLoggedIn, 'TEST', user);
-      if (isLoggedIn) {
-        loginHelper(user).then(response => {
-          if (response?.status) {
-            navigation.replace('HomeStack');
-          } else {
-            navigation.replace('Login');
-          }
-        });
+      if (isLoggedIn && loggedDate < 30) {
+        navigation.replace('HomeStack');
       } else {
         navigation.replace('Login');
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [biometricSucess]);
+
+  const getDaysBetweenDates = (date1, date2) => {
+    // Get the time in milliseconds for each date
+    var time1 = date1.getTime();
+    var time2 = date2.getTime();
+
+    // Calculate the difference in milliseconds
+    var differenceInMilliseconds = Math.abs(time1 - time2);
+
+    // Convert the difference in milliseconds to days
+    return Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+  };
   return (
     <View style={styles.container}>
       <Image

@@ -8,7 +8,9 @@ import {loginHelper} from '../../api/helper/loginHelper';
 import {useDispatch, useSelector} from 'react-redux';
 import {setLoader} from '../../Redux/Reducers/globalReducer';
 import Toast from 'react-native-simple-toast';
-const FIRitem = ({data, coordinates, updateLocation}) => {
+import {getFIRhelper} from '../../api/helper/getFIRhelper';
+const FIRitem = (props, {navigation}) => {
+  const {data, coordinates, updateLocation} = props;
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.authReducer);
   const openGps = () => {
@@ -30,9 +32,11 @@ const FIRitem = ({data, coordinates, updateLocation}) => {
     try {
       console.log(param);
       let res = await updateFir(param);
+      console.log(res, 'RESPONCE UPDATE===');
       if (res[0] === 'Success..') {
+        dispatch(setLoader(false));
         Toast.show('Update success..', Toast.SHORT, Toast.TOP);
-        loginHelper(user);
+        getFIRhelper(navigation);
       } else {
         dispatch(setLoader(false));
         if (res?.Message) {

@@ -5,6 +5,7 @@ export const authSlice = createSlice({
     user: {
       userName: '',
       password: '',
+      accessToken: '',
     },
     isLoggedIn: false,
     dateLogin: '',

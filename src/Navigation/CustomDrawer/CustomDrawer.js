@@ -1,5 +1,5 @@
 import {View, Text, SafeAreaView, ScrollView, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {styles} from './styles';
 import FIcon from 'react-native-vector-icons/Fontisto';
@@ -8,15 +8,24 @@ import DeviceInfo from 'react-native-device-info';
 import {logOut} from '../../Redux/Reducers/authReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {loginHelper} from '../../api/helper/loginHelper';
+import {getFIRhelper} from '../../api/helper/getFIRhelper';
+import string from '../../Theme/Responsive/style';
+import Toast from 'react-native-simple-toast';
 const CustomDrawer = props => {
   const dispatch = useDispatch();
-  const {user} = useSelector(state => state.authReducer);
+  const {isLoggedIn} = useSelector(state => state.authReducer);
   const navigation = useNavigation();
   const onLogout = () => {
     dispatch(logOut());
     navigation.replace('Login');
   };
+  useEffect(() => {
+    if (!isLoggedIn) {
+      Toast.show('Authorization has been denied', Toast.SHORT, Toast.TOP);
+      navigation.replace('Login');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
   return (
     <SafeAreaView style={styles.mainViewContainer}>
       <ScrollView
@@ -43,7 +52,7 @@ const CustomDrawer = props => {
             label={'Refresh Data'}
             labelStyle={styles.drawerItemTextStyle}
             onPress={() => {
-              loginHelper(user);
+              getFIRhelper(props.navigation);
               props.navigation.closeDrawer();
             }}
             icon={() => (
@@ -55,6 +64,12 @@ const CustomDrawer = props => {
             label={'Version ' + DeviceInfo.getVersion()}
             labelStyle={styles.drawerItemTextStyle}
           />
+          {/* <Text style={{color: 'rgba(0,0,0,0.015)', alignSelf: 'center'}}>
+            {string.app}
+          </Text>
+          <Text style={{color: 'rgba(0,0,0,0.015)', alignSelf: 'center'}}>
+            {string.version}
+          </Text> */}
           <View style={styles.drawerLine} />
         </DrawerContentScrollView>
       </ScrollView>

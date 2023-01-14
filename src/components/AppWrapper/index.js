@@ -1,8 +1,18 @@
 import {SafeAreaView} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './styles';
 import LinearGradient from 'react-native-linear-gradient';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 const AppWrapper = ({children}) => {
+  const navigation = useNavigation();
+  const {isLoggedIn} = useSelector(state => state.authReducer);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     navigation.replace('Login');
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isLoggedIn]);
   return (
     <LinearGradient
       // start={{x: 0.0, y: 0.25}}

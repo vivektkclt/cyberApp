@@ -23,8 +23,8 @@ export const styles = StyleSheet.create({
   titleTxt: {
     color: 'white',
     marginRight: 50,
-    height: '60%',
-    width: '60%',
+    height: '95%',
+    width: '95%',
     resizeMode: 'contain',
     // fontStyle:''
     // marginLeft: 70,
