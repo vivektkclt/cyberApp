@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.registerapp",
+  "applicationId": "com.app.rapid",
   "variantName": "release",
   "elements": [
     {

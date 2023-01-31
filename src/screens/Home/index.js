@@ -9,9 +9,11 @@ import {setLoader} from '../../Redux/Reducers/globalReducer';
 import LottieView from 'lottie-react-native';
 import {getFIRhelper} from '../../api/helper/getFIRhelper';
 import animations from '../../assets/animations';
+import appColors from '../../Theme/Colors';
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
   const {firList, loader} = useSelector(state => state.globalReducer);
+  const {user} = useSelector(state => state.authReducer);
   const [cordinates, setCordinates] = useState({latitude: '', longitude: ''});
   useEffect(() => {
     getFIRhelper(navigation);
@@ -50,12 +52,24 @@ const Home = ({navigation}) => {
     <AppWrapper>
       <HomeHeader />
       {firList && firList?.length > 0 ? (
-        <FlatList
-          contentContainerStyle={styles.container}
-          data={firList}
-          renderItem={firItem}
-          keyExtractor={item => item?.Internalid}
-        />
+        <>
+          <Text
+            style={{
+              width: '85%',
+              alignSelf: 'center',
+              fontWeight: 'bold',
+              color: appColors.white,
+              fontSize: 18,
+            }}>
+            {user.psName}
+          </Text>
+          <FlatList
+            contentContainerStyle={styles.container}
+            data={firList}
+            renderItem={firItem}
+            keyExtractor={item => item?.Internalid}
+          />
+        </>
       ) : (
         <View style={styles.emptyContainer}>
           {loader ? null : (

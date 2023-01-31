@@ -1,4 +1,4 @@
-import {View, StatusBar, TouchableOpacity, Image} from 'react-native';
+import {View, StatusBar, TouchableOpacity, Text, Image} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -17,11 +17,12 @@ const HomeHeader = ({children}) => {
           <Icon color={appColors.white} name="menu" size={35} />
         </TouchableOpacity>
         <View style={styles.titleContainer}>
-          <Image
+          <Text style={styles.titleTxt}>LAT-LNG UPDATE</Text>
+          {/* <Image
             resizeMode="contain"
             style={styles.titleTxt}
             source={images.titleName}
-          />
+          /> */}
         </View>
       </View>
     </>

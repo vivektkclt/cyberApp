@@ -10,23 +10,23 @@ export const styles = StyleSheet.create({
     // backgroundColor: appColors.transPrentWhite,
   },
   titleContainer: {
-    width: '85%',
+    width: '75%',
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'white',
+    // backgroundColor: 'green',
   },
   drawerButton: {
     height: '100%',
+    width: '12%',
     justifyContent: 'center',
-    // backgroundColor: 'green',
+    // backgroundColor: 'yellow',
+    // alignItems: 'center',
   },
   titleTxt: {
     color: 'white',
-    marginRight: 50,
-    height: '95%',
-    width: '95%',
-    resizeMode: 'contain',
+    fontWeight: 'bold',
+    fontSize: 22,
     // fontStyle:''
-    // marginLeft: 70,
+    marginRight: 50,
   },
 });

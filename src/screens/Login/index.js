@@ -21,14 +21,16 @@ const Login = ({navigation}) => {
     if (validate()) {
       dispactch(setLoader(true));
       let response = await login({userName: userName, password: password});
-      console.log(response, 'RESPONSE++');
-      if (response?.AccessToken) {
+      console.log(response, 'RESPONSE++===');
+      if (response?.accessToken) {
         dispactch(setLoader(false));
         dispactch(
           setLogin({
+            district: response?.accessToken?.district,
+            psName: response?.accessToken?.psname,
             userName: userName,
             password: password,
-            accessToken: response?.AccessToken,
+            accessToken: response?.accessToken?.token,
           }),
         );
         navigation.replace('HomeStack');

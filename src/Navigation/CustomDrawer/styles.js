@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     margin: 0,
   },
   drawerHeaderView: {
-    height: 150,
+    height: 250,
     backgroundColor: appColors.white,
     borderBottomWidth: 1,
     borderBottomColor: appColors.transPrentWhite,
@@ -59,5 +59,11 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 5,
+  },
+  psTxt: {
+    alignSelf: 'center',
+    fontWeight: '700',
+    color: appColors.background,
+    fontSize: 15,
   },
 });

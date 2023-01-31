@@ -46,7 +46,6 @@ const SplashScreen = ({navigation}) => {
         dateLogin && dateLogin !== ''
           ? getDaysBetweenDates(new Date(), new Date(dateLogin))
           : 0;
-      console.log(dateLogin, 'DATE+=====111', loggedDate);
       getLocation();
       if (isLoggedIn && loggedDate < 30) {
         navigation.replace('HomeStack');

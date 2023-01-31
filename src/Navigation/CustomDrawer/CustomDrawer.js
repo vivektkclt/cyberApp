@@ -11,9 +11,10 @@ import {useNavigation} from '@react-navigation/native';
 import {getFIRhelper} from '../../api/helper/getFIRhelper';
 import string from '../../Theme/Responsive/style';
 import Toast from 'react-native-simple-toast';
+import appColors from '../../Theme/Colors';
 const CustomDrawer = props => {
   const dispatch = useDispatch();
-  const {isLoggedIn} = useSelector(state => state.authReducer);
+  const {isLoggedIn, user} = useSelector(state => state.authReducer);
   const navigation = useNavigation();
   const onLogout = () => {
     dispatch(logOut());
@@ -36,8 +37,11 @@ const CustomDrawer = props => {
           contentContainerStyle={styles.mainViewContainer}>
           <View style={styles.drawerHeaderView}>
             <Image source={images.rapidLogo} style={styles.drawerLogoImage} />
+            <Text style={styles.psTxt}>{user?.psName}</Text>
+            <Text style={[styles.psTxt, {marginTop: 10}]}>
+              {user?.district}
+            </Text>
           </View>
-
           <DrawerItem
             label={'Log Off'}
             labelStyle={styles.drawerItemTextStyle}

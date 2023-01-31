@@ -12,7 +12,6 @@ import {getFIRhelper} from '../../api/helper/getFIRhelper';
 const FIRitem = (props, {navigation}) => {
   const {data, coordinates, updateLocation} = props;
   const dispatch = useDispatch();
-  const {user} = useSelector(state => state.authReducer);
   const openGps = () => {
     Linking.openURL(
       'https://www.google.com/maps?q=' +

@@ -6,6 +6,8 @@ export const authSlice = createSlice({
       userName: '',
       password: '',
       accessToken: '',
+      district: '',
+      psName: '',
     },
     isLoggedIn: false,
     dateLogin: '',
@@ -20,6 +22,8 @@ export const authSlice = createSlice({
       state.user = {
         userName: '',
         password: '',
+        district: '',
+        psName: '',
       };
       state.isLoggedIn = false;
       state.dateLogin = '';
