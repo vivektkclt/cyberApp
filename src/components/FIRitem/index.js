@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Linking} from 'react-native';
+import {View, Text, TouchableOpacity, Linking, Alert} from 'react-native';
 import React from 'react';
 import {styles} from './style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -68,7 +68,24 @@ const FIRitem = (props, {navigation}) => {
       </Text>
       <View style={styles.btnWrapper}>
         <TouchableOpacity
-          onPress={() => onConfirm()}
+          onPress={() =>
+            Alert.alert(
+              'Confirm FIR update',
+              'Are you sure you want to update FIR location ',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Selected option'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'Yes',
+                  onPress: () => onConfirm(),
+                },
+              ],
+              {cancelable: false},
+            )
+          }
           style={styles.btnContainer}>
           <Text style={styles.btnTxt}>Confirm</Text>
         </TouchableOpacity>
