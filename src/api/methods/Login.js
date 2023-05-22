@@ -4,6 +4,14 @@ import {configHeader} from '../headers';
 // Login Api
 export async function login(payload) {
   const headers = configHeader();
+  console.log(
+    GET_TOKEN +
+      '?username=' +
+      payload.userName +
+      '&password=' +
+      payload?.password,
+    'URLLLL',
+  );
   return (await api(headers))
     .post(
       GET_TOKEN +
